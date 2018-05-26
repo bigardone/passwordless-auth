@@ -28,8 +28,9 @@ defmodule PasswordlessAuthWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/passwordless_auth_web/templates",
-                        namespace: PasswordlessAuthWeb
+      use Phoenix.View,
+        root: "lib/passwordless_auth_web/templates",
+        namespace: PasswordlessAuthWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

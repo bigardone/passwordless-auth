@@ -39,5 +39,3 @@ config :passwordless_auth_web, PasswordlessAuthWeb.Endpoint,
       ~r{lib/passwordless_auth_web/templates/.*(eex)$}
     ]
   ]
-
-

@@ -7,7 +7,7 @@ defmodule PasswordlessAuthWeb.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the endpoint when the application starts
-      supervisor(PasswordlessAuthWeb.Endpoint, []),
+      supervisor(PasswordlessAuthWeb.Endpoint, [])
       # Start your own worker by calling: PasswordlessAuthWeb.Worker.start_link(arg1, arg2, arg3)
       # worker(PasswordlessAuthWeb.Worker, [arg1, arg2, arg3]),
     ]
