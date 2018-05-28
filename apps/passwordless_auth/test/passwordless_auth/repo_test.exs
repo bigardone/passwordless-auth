@@ -62,4 +62,16 @@ defmodule PasswordlessAuth.RepoTest do
       assert :error = Repo.fetch(name, "not_found@test.com")
     end
   end
+
+  describe ".find_by_token/2" do
+    test "returns {email, token} when token exists" do
+      name = :repo_test_6
+      email = "foo@test.com"
+      token = "token-value"
+      {:ok, _pid} = Repo.start_link(name: name, emails: [email])
+      :ok = Repo.save(name, email, token)
+
+      assert {^email, ^token} = Repo.find_by_token(name, token)
+    end
+  end
 end

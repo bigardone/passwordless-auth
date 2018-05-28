@@ -25,6 +25,8 @@ defmodule PasswordlessAuth.Repo do
 
   def fetch(pid \\ @name, email), do: GenServer.call(pid, {:fetch, email})
 
+  def find_by_token(pid \\ @name, token), do: GenServer.call(pid, {:find_by_token, token})
+
   @impl GenServer
   def init(emails) do
     state = Enum.reduce(emails, %{}, &Map.put(&2, &1, nil))
@@ -49,5 +51,11 @@ defmodule PasswordlessAuth.Repo do
     Logger.info(fn -> ">> Repo: handling {:fetch, #{email}}" end)
 
     {:reply, Map.fetch(tokens, email), tokens}
+  end
+
+  def handle_call({:find_by_token, token}, _from, tokens) do
+    Logger.info(fn -> ">> Repo: handling {:find_by_token, #{token}}" end)
+
+    {:reply, Enum.find(tokens, &(elem(&1, 1) == token)), tokens}
   end
 end

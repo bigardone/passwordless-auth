@@ -12,6 +12,13 @@ defmodule PasswordlessAuth.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    Supervisor.start_link([], strategy: :one_for_one, name: PasswordlessAuth.Supervisor)
+    children = [
+      worker(
+        PasswordlessAuth.Repo,
+        [[emails: Application.get_env(:passwordless_auth, :repo)[:emails]]]
+      )
+    ]
+
+    Supervisor.start_link(children, strategy: :one_for_one, name: PasswordlessAuth.Supervisor)
   end
 end
