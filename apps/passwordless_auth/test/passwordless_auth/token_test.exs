@@ -17,7 +17,7 @@ defmodule PasswordlessAuth.TokenTest do
     test "returns {:ok, data} when token is valid" do
       {:ok, token} = Token.generate("foo")
 
-      assert :ok = Token.verify(token, "foo")
+      assert {:ok, "foo"} = Token.verify(token, "foo")
     end
 
     test "returns {:error, :invalid} when token is not valid" do

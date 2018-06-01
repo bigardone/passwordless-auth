@@ -26,7 +26,7 @@ defmodule PasswordlessAuth.Token do
          ) do
       {:ok, ^data} ->
         Logger.info(fn -> "Token: valid value" end)
-        :ok
+        {:ok, data}
 
       {:ok, _other} ->
         Logger.info(fn -> "Token: invalid value" end)
