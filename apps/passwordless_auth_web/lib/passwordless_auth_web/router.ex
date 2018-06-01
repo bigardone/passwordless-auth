@@ -1,6 +1,8 @@
 defmodule PasswordlessAuthWeb.Router do
   use PasswordlessAuthWeb, :router
 
+  if Mix.env() == :dev, do: forward("/sent_emails", Bamboo.EmailPreviewPlug)
+
   pipeline :browser do
     plug(:accepts, ["html"])
     plug(:fetch_session)
@@ -18,6 +20,7 @@ defmodule PasswordlessAuthWeb.Router do
     pipe_through(:browser)
 
     get("/", PageController, :index)
+    get("/:token", PageController, :show)
   end
 
   # Other scopes may use custom stacks.
