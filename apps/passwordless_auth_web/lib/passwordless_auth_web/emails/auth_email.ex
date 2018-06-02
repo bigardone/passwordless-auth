@@ -5,7 +5,7 @@ defmodule PasswordlessAuthWeb.Emails.AuthEmail do
   @from "support@passwordlessauth.com"
 
   def build(email, token) do
-    url = page_url(PasswordlessAuthWeb.Endpoint, :show, token)
+    url = page_url(PasswordlessAuthWeb.Endpoint, :index, [], token: token)
 
     new_email(
       to: email,

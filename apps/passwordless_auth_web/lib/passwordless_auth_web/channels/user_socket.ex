@@ -16,9 +16,12 @@ defmodule PasswordlessAuthWeb.UserSocket do
 
     case PasswordlessAuth.verify_token(token) do
       {:ok, email} ->
+        Logger.info(fn -> "UserSocket: connection success" end)
+
         {:ok, assign(socket, :user, %{email: email})}
 
-      _ ->
+      other ->
+        Logger.info(fn -> "UserSocket: connection error #{inspect(other)}" end)
         :error
     end
   end

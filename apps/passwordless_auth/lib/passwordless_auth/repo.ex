@@ -35,13 +35,13 @@ defmodule PasswordlessAuth.Repo do
 
   @impl true
   def handle_call({:exists, email}, _from, state) do
-    Logger.info(fn -> ">> Repo: handling {:exists, #{email}}" end)
+    Logger.info(fn -> "Repo: handling {:exists, #{email}}" end)
 
     {:reply, Map.has_key?(state, email), state}
   end
 
   def handle_call({:save, email, token}, _from, state) do
-    Logger.info(fn -> ">> Repo: handling {:save_token, #{email}, #{token}}" end)
+    Logger.info(fn -> "Repo: handling {:save_token, #{email}, #{token}}" end)
 
     if Map.has_key?(state, email) do
       {:reply, :ok, Map.put(state, email, token)}
@@ -51,19 +51,19 @@ defmodule PasswordlessAuth.Repo do
   end
 
   def handle_call({:fetch, email}, _from, state) do
-    Logger.info(fn -> ">> Repo: handling {:fetch, #{email}}" end)
+    Logger.info(fn -> "Repo: handling {:fetch, #{email}}" end)
 
     {:reply, Map.fetch(state, email), state}
   end
 
   def handle_call({:find_by_token, token}, _from, state) do
-    Logger.info(fn -> ">> Repo: handling {:find_by_token, #{token}}" end)
+    Logger.info(fn -> "Repo: handling {:find_by_token, #{token}}" end)
 
     {:reply, Enum.find(state, &(elem(&1, 1) == token)), state}
   end
 
   def handle_call({:add_email, email}, _from, state) do
-    Logger.info(fn -> ">> Repo: handling {:add_email, #{email}" end)
+    Logger.info(fn -> "Repo: handling {:add_email, #{email}" end)
 
     if Map.has_key?(state, email) do
       {:reply, {:error, :email_exists}, state}

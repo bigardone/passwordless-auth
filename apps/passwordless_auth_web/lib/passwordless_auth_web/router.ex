@@ -19,8 +19,7 @@ defmodule PasswordlessAuthWeb.Router do
     # Use the default browser stack
     pipe_through(:browser)
 
-    get("/", PageController, :index)
-    get("/:token", PageController, :show)
+    get("/*path", PageController, :index)
   end
 
   # Other scopes may use custom stacks.
