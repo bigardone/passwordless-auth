@@ -24,7 +24,9 @@ defmodule PasswordlessAuthWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PasswordlessAuthWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PasswordlessAuthWeb do
+    pipe_through(:api)
+
+    post("/auth", AuthenticationController, :create)
+  end
 end
