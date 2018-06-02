@@ -1,2 +1,7 @@
-<div id="elm-main">
+<div id="elm-main" class="flex items-center justify-center h-screen">
 </div>
+
+<script>
+  window.token = '<%= @token %>';
+  window.socketUrl = '<%= socket_url() %>';
+</script>
