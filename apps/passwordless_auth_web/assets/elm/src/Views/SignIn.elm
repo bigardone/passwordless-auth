@@ -3,23 +3,35 @@ module Views.SignIn exposing (view)
 import Html exposing (Html, form)
 import Html.Attributes as Html
 import Html.Events as Html
-import Page.SignIn exposing (Model, Msg(..))
+import Page.SignIn exposing (Model, SignInForm(..), Msg(..))
 
 
 view : Model -> Html Msg
-view { email, message } =
-    case message of
-        Nothing ->
-            formView email
+view { form } =
+    let
+        content =
+            case form of
+                Editing email ->
+                    formView email
 
-        Just text ->
-            messageView text
+                Sending email ->
+                    formView email
+
+                Success text ->
+                    successMessageView text
+
+                Error text ->
+                    errorMessageView text
+    in
+        Html.section
+            [ Html.class "bg-purple-darker p-8 flex flex-1 items-center justify-center h-screen" ]
+            [ content ]
 
 
 formView : String -> Html Msg
 formView email =
     Html.div
-        [ Html.class "p-8" ]
+        []
         [ Html.img
             [ Html.src "/images/icons8-mailbox-128.png"
             , Html.class "mb-4 slide-in-blurred-top"
@@ -37,7 +49,7 @@ formView email =
             ]
             [ Html.input
                 [ Html.class "appearance-none block w-full bg-grey-lighter text-grey-darker rounded py-3 px-4 mb-3"
-                , Html.placeholder "valid@email.com"
+                , Html.placeholder "foo@email.com"
                 , Html.type_ "email"
                 , Html.onInput HandleEmailInput
                 , Html.value email
@@ -50,10 +62,10 @@ formView email =
         ]
 
 
-messageView : String -> Html Msg
-messageView message =
+successMessageView : String -> Html Msg
+successMessageView message =
     Html.div
-        [ Html.class "p-8" ]
+        []
         [ Html.img
             [ Html.src "/images/icons8-postal-128.png"
             , Html.class "mb-4 jello-horizontal"
@@ -62,6 +74,19 @@ messageView message =
         , Html.h3
             []
             [ Html.text "Check your email" ]
+        , Html.p
+            []
+            [ Html.text message ]
+        ]
+
+
+errorMessageView : String -> Html Msg
+errorMessageView message =
+    Html.div
+        []
+        [ Html.h3
+            []
+            [ Html.text "Whoops!" ]
         , Html.p
             []
             [ Html.text message ]

@@ -15,10 +15,12 @@ defmodule PasswordlessAuth.Application do
     children = [
       worker(
         PasswordlessAuth.Repo,
-        [[emails: Application.get_env(:passwordless_auth, :repo)[:emails]]]
+        [[emails: emails()]]
       )
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: PasswordlessAuth.Supervisor)
   end
+
+  defp emails, do: Application.get_env(:passwordless_auth, :repo)[:emails]
 end

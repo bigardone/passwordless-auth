@@ -1,10 +1,9 @@
-module Data.Session
-    exposing
-        ( Session
-        , User
-        , decoder
-        , encode
-        )
+module Data.Session exposing
+    ( Session(..)
+    , User
+    , decoder
+    , encode
+    )
 
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline exposing (decode, required)
@@ -15,8 +14,9 @@ type alias User =
     { email : String }
 
 
-type alias Session =
-    { user : Maybe User }
+type Session
+    = Anonymous
+    | Authenticated User
 
 
 

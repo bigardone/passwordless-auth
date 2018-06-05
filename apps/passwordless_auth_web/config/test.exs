@@ -5,3 +5,8 @@ use Mix.Config
 config :passwordless_auth_web, PasswordlessAuthWeb.Endpoint,
   http: [port: 4001],
   server: false
+
+# Bamboo mailer configuration
+config :passwordless_auth_web,
+       PasswordlessAuthWeb.Service.Mailer,
+       adapter: Bamboo.TestAdapter

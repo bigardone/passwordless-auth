@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 body {
-  background: config('colors.purple-darker');
-  color: config('colors.purple-lighter');
   height: 100vh;
   text-align: center;
 }
@@ -16,14 +14,20 @@ h3 {
 
 p {
   margin-bottom: 1em;
+  color: config('colors.purple-lighter');
 }
 
 img {
   height: 128px;
 }
 
+a {
+  cursor: pointer;
+}
+
 .main-header {
   background: config('colors.purple-darker');
+  color: config('colors.purple-lighter');
 }
 
 .main-content {
@@ -34,6 +38,9 @@ img {
   color: config('colors.grey-darkest');
 }
 
+.main-content p {
+  color: config('colors.grey-dark');
+}
 .slide-in-blurred-top {
   animation: slide-in-blurred-top 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }

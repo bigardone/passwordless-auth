@@ -1,27 +1,38 @@
-module Page.SignIn
-    exposing
-        ( Model
-        , Msg(..)
-        , update
-        , initialModel
-        )
+module Page.SignIn exposing
+    ( Model
+    , Msg(..)
+    , SignInForm(..)
+    , initialModel
+    , update
+    )
 
 import Http
-import Json.Encode as Encode
 import Json.Decode as Decode
+import Json.Encode as Encode
+
+
+
+-- MODEL --
+
+
+type SignInForm
+    = Editing String
+    | Sending String
+    | Success String
+    | Error String
 
 
 type alias Model =
-    { email : String
-    , message : Maybe String
-    }
+    { form : SignInForm }
 
 
 initialModel : Model
 initialModel =
-    { email = ""
-    , message = Nothing
-    }
+    { form = Editing "" }
+
+
+
+-- UPDATE --
 
 
 type Msg
@@ -31,33 +42,28 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        HandleEmailInput value ->
-            { model | email = value } ! []
+update msg ({ form } as model) =
+    case ( msg, form ) of
+        ( HandleEmailInput value, Editing _ ) ->
+            { model | form = Editing value } ! []
 
-        HandleFormSubmit ->
-            model ! [ requestToken model.email ]
+        ( HandleFormSubmit, Editing email ) ->
+            { model | form = Sending email } ! [ requestToken FormSubmitResponse email ]
 
-        FormSubmitResponse payload ->
+        ( FormSubmitResponse payload, Sending _ ) ->
             case payload of
                 Ok message ->
-                    { model
-                        | message = Just message
-                        , email = ""
-                    }
-                        ! []
+                    { model | form = Success message } ! []
 
                 _ ->
-                    { model
-                        | message = Just "We couldn't sent you your magic link due to an error, please try again later."
-                        , email = ""
-                    }
-                        ! []
+                    { model | form = Error "We couldn't sent you your magic link due to an error, please try again later." } ! []
+
+        _ ->
+            model ! []
 
 
-requestToken : String -> Cmd Msg
-requestToken email =
+requestToken : (Result Http.Error String -> msg) -> String -> Cmd msg
+requestToken msg email =
     let
         body =
             Encode.object [ ( "email", Encode.string email ) ]
@@ -73,7 +79,7 @@ requestToken email =
                 , withCredentials = False
                 }
     in
-        Http.send FormSubmitResponse request
+    Http.send msg request
 
 
 requestTokenDecoder : Decode.Decoder String

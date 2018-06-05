@@ -1,35 +1,48 @@
-module Views.Page
-    exposing
-        ( frame
-        )
+module Views.Page exposing
+    ( Msg(..)
+    , frameView
+    , headerView
+    )
 
-import Data.Session exposing (User)
+import Data.Session exposing (Session(..))
 import Html exposing (Html)
 import Html.Attributes as Html
+import Html.Events as Html
 
 
-frame : Bool -> Maybe User -> Html msg -> Html msg
-frame isLoading user content =
-    case user of
-        Nothing ->
+type Msg
+    = SignOut
+
+
+frameView : Session -> Html msg -> Html msg -> Html msg
+frameView session header content =
+    case session of
+        Anonymous ->
             Html.text ""
 
-        Just user ->
+        Authenticated _ ->
             Html.div
                 [ Html.class "main-section flex-1 flex-col flex h-screen" ]
-                [ Html.header
-                    [ Html.class "main-header" ]
-                    [ Html.nav
-                        [ Html.class "flex justify-between" ]
-                        [ Html.span
-                            [ Html.class "p-4 text-white" ]
-                            [ Html.text "PasswordlessAuth" ]
-                        , Html.a
-                            [ Html.class "p-4" ]
-                            [ Html.text user.email ]
-                        ]
-                    ]
+                [ header
                 , Html.div
                     [ Html.class "main-content bg-grey-lightest flex-1 flex items-center justify-center" ]
                     [ content ]
                 ]
+
+
+headerView : Html Msg
+headerView =
+    Html.header
+        [ Html.class "main-header" ]
+        [ Html.nav
+            [ Html.class "flex justify-between" ]
+            [ Html.span
+                [ Html.class "flex-1 p-4 text-white text-left" ]
+                [ Html.text "Admin panel" ]
+            , Html.a
+                [ Html.class "p-4"
+                , Html.onClick SignOut
+                ]
+                [ Html.text "Sign out" ]
+            ]
+        ]

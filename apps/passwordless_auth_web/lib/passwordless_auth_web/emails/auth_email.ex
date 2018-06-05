@@ -1,6 +1,6 @@
 defmodule PasswordlessAuthWeb.Emails.AuthEmail do
   import Bamboo.Email, only: [new_email: 1]
-  import PasswordlessAuthWeb.Router.Helpers
+  import PasswordlessAuthWeb.Router.Helpers, only: [page_url: 4]
 
   @from "support@passwordlessauth.com"
 

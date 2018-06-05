@@ -6,6 +6,7 @@ defmodule PasswordlessAuth.TokenTest do
   describe ".generate/1" do
     test "returns {:error, :invalid} when value is nil" do
       assert {:error, :invalid} = Token.generate(nil)
+      assert {:error, :invalid} = Token.generate("")
     end
 
     test "returns {:ok, token}" do

@@ -6,12 +6,12 @@ defmodule PasswordlessAuthWeb.UserSocketTest do
   alias PasswordlessAuthWeb.UserSocket
 
   describe "connect/2" do
-    test "errors when invalid params or token are passed" do
+    test "errors when passing invalid params or token" do
       assert :error = connect(UserSocket, %{})
       assert :error = connect(UserSocket, %{"token" => "invalid-token"})
     end
 
-    test "joins when valid token is passed" do
+    test "joins when passing valid token" do
       email = "foo@#{__MODULE__}.com"
       :ok = Repo.add_email(email)
       {:ok, token} = PasswordlessAuth.provide_token_for(email)
