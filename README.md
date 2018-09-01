@@ -8,7 +8,9 @@ Have you ever found yourself adding HTTP basic authentication to a small admin p
 Because, why not? I wanted it to be as simple as possible, taking advantage of some of the features which make Elixir and Phoenix so awesome.
 
 ## Tutorial
-Coming soon...
+1.  [Project setup and the initial functionality for storing and verifying authentication tokens](/blog/2018/06/09/elixir-and-phoenix-basic-passwordless-and-databaseless-authentication-pt-1)
+2.  [Sending authentication link emails and the user socket connection](/blog/2018/06/20/elixir-and-phoenix-basic-passwordless-and-databaseless-authentication-pt-2)
+3.  [Setting up webpack as our asset bundler and the Elm single-page application](/blog/2018/09/01/elixir-and-phoenix-basic-passwordless-and-databaseless-authentication-pt-3)
 
 ## Running the project
 To start your Phoenix server:
